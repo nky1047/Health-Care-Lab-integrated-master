@@ -6,7 +6,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.com.dao.AppointmentRepositories;
-import org.com.error.RecordNotFoundException;
+import org.com.exception.RecordNotFoundException;
 import org.com.model.Appointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
