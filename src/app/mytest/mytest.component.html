@@ -1,0 +1,19 @@
+<h2>All Tests</h2>
+
+<table>
+    <tr>
+        <td>Test ID</td>
+        <td>Test NAME</td>
+        <td>Test DETAILS</td>
+        <td>Test COST</td>
+    </tr>
+    <tr *ngFor="let t of test|async">
+        <td>{{t.testId}}</td>
+        <td>{{t.testName}}</td>
+        <td>{{t.testDetails}}</td>
+        <td>{{t.testCost}}</td>
+        <td><button (click)="updateTest(t.testId)">Update</button></td>
+        <td><button (click)="deleteTest(t.testId)">Delete</button></td>
+        <!-- <td><button (click)="productDetail(p.prdId)">Details</button></td> -->
+    </tr>
+</table>

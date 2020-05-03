@@ -1,0 +1,27 @@
+<h2>All Appointments</h2>
+
+<table>
+    <tr>
+        <td>Appointment ID</td>
+        <td>User ID</td>
+        <td>Diagnostic Centre ID</td>
+        <td>Test ID</td>
+        <td>Date</td>
+        <td>Time</td>
+        <td>Total Cost</td>
+        <td>Approved</td>
+    </tr>
+    <tr *ngFor="let a of appointment|async">
+        <td>{{a.appointmentId}}</td>
+        <td>{{a.userId}}</td>
+        <td>{{a.diagnosticCentreId}}</td>
+        <td>{{a.testId}}</td>
+        <td>{{a.date1}}</td>
+        <td>{{a.time1}}</td>
+        <td>{{a.totalCost}}</td>
+        <td>{{a.approved}}</td>
+        <td><button (click)="updateAppointment(a.appointmentId)">Update</button></td>
+        <td><button (click)="deleteAppointment(a.appointmentId)">Delete</button></td>
+        <!-- <td><button (click)="productDetail(p.prdId)">Details</button></td> -->
+    </tr>
+</table>

@@ -1,0 +1,23 @@
+<h1>Update Test Form</h1>
+
+<div style="width: 600px;">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="testId" placeholder="Name">Enter Test Id</label>
+            <input class="form-control" id="name" required [(ngModel)]="test.testId" name="testId">
+        </div>
+        <div class="form-group">
+            <label for="testName" placeholder="Name">Enter Test Name</label>
+            <input class="form-control" id="name" required [(ngModel)]="test.testName" name="testName">
+        </div>
+        <div class="form-group">
+            <label for="testDetails" placeholder="Name">Enter Test Details</label>
+            <input class="form-control" id="name" required [(ngModel)]="test.testDetails" name="testDetails">
+        </div>
+        <div class="form-group">
+            <label for="testCost" placeholder="Cost">Enter Test cost</label>
+            <input class="form-control" id="cost" required [(ngModel)]="test.testCost" name="testCost">
+        </div>
+        <button type="submit" class="btn-success" >Submit</button>
+    </form>
+</div>
