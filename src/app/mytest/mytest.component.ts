@@ -36,5 +36,10 @@ export class MytestComponent implements OnInit {
     this.router.navigate(['updateTest',id]);
 
   }
-
+  goAddTest() {
+    this.router.navigate(['addtest']);
+  }
+  goAppointments(){
+    this.router.navigate(['myappointment']);
+  }
 }

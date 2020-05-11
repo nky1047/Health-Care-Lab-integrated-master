@@ -28,12 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin")
-@CrossOrigin(value = "http://localhost:4200", maxAge = 80)
+@CrossOrigin(value = "http://localhost:4200")
 public class AdminController {
 
 	@Autowired
 	AdminRepository dao;
-
 
 	/*
 	 * @PostMapping("/getAdmin")
@@ -46,7 +45,7 @@ public class AdminController {
 	 * catch(RecordNotFoundException e) { return new
 	 * ResponseEntity(e.getMessage(),HttpStatus.NOT_FOUND); } }
 	 */
-	//Add ADMIN
+	// Add ADMIN
 	@PostMapping("/getAdmin")
 	public Admin saveAdmin(@Valid @RequestBody Admin admin) {
 		return dao.save(admin);
@@ -64,24 +63,31 @@ public class AdminController {
 	public List<Admin> showAllAdmin() {
 		return dao.findAll();
 	}
+
 	//SEARCH ADMIN
 	@RequestMapping("/getAdmin/{id}")
-	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<?> findAdmin(@PathVariable("id") int uid) {
+	public ResponseEntity<Admin> findAdmin(@PathVariable("id") int uid) {
 		Optional<Admin> findById = dao.findById(uid);
-		try {
-			if (findById.isPresent()) {
-				Admin admin = findById.get();
-				return new ResponseEntity<Admin>(admin, HttpStatus.OK);
-			} else
-				throw new RecordNotFoundException("Record not found!!");
-		} catch (RecordNotFoundException e) {
-
-			return new ResponseEntity<Admin>(HttpStatus.NOT_FOUND);
-		}
+		if (findById.isPresent()) {
+			Admin admin = findById.get();
+			return new ResponseEntity<Admin>(admin, HttpStatus.OK);
+		} else
+			return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
 	}
-	
-	//DELETE ADMIN
+	/*
+	 * @RequestMapping("/getAdmin/{id}")
+	 * 
+	 * @ExceptionHandler(RecordNotFoundException.class) public ResponseEntity<?>
+	 * findAdmin(@PathVariable("id") int uid) { Optional<Admin> findById =
+	 * dao.findById(uid); try { if (findById.isPresent()) { Admin admin =
+	 * findById.get(); return new ResponseEntity<Admin>(admin, HttpStatus.OK); }
+	 * else throw new RecordNotFoundException("Record not found!!"); } catch
+	 * (RecordNotFoundException e) {
+	 * 
+	 * return new ResponseEntity<Admin>(HttpStatus.NOT_FOUND); } }
+	 */
+
+	// DELETE ADMIN
 	@DeleteMapping("/getAdmin/{id}")
 	public String removeAdmin(@PathVariable("id") int uid) {
 		Optional<Admin> findById = dao.findById(uid);
@@ -92,23 +98,27 @@ public class AdminController {
 		return "Admin Not Found!!!";
 	}
 
-	
 	//COUNT ADMINS
 	@GetMapping("/getCount")
 	public String getTotalCount() {
 		return "Total no of records are: " + dao.count();
 	}
 
-	
-	//UPDATE ADMIN
-	@PutMapping("/getAdmin/{id}")
-	public String updateAdmin(@RequestBody Admin admin) {
+	// UPDATE ADMIN
+	@PutMapping("/getAdmin/")
+	public ResponseEntity<Admin> updateProduct(@Valid @RequestBody Admin admin) {
+
 		Optional<Admin> findById = dao.findById(admin.getId());
-		if (findById.isPresent()) {
-			dao.save(admin);
-			return "Admin Detail Updated!!!";
+		try {
+			if (findById.isPresent()) {
+				dao.save(admin);
+				return new ResponseEntity<Admin>(admin, HttpStatus.OK);
+			} else {
+				throw new RecordNotFoundException("Record not present");
+			}
+		} catch (RecordNotFoundException e) {
+			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
-		return "Admin Not Found!!!";
 	}
 
 }

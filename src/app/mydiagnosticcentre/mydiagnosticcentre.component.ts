@@ -34,4 +34,20 @@ export class MydiagnosticcentreComponent implements OnInit {
     this.router.navigate(['updateDiagnosticCentre',id]);
 
   }
+
+  goHome(){
+    this.router.navigate(['home']);
+  }
+  goCustomer(){
+    this.router.navigate(['customer']);
+  }
+  goAddCustomer(){
+    this.router.navigate(['addCustomer']);
+  }
+  goAddAppointment(){
+    this.router.navigate(['addappointment']);
+  }
+  goAddTest() {
+    this.router.navigate(['add']);
+  }
 }

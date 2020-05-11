@@ -1,11 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
+import { FormsModule} from '@angular/forms';
+import { AdminComponent } from './admin/admin.component';
+import { AddAdminComponent } from './add-admin/add-admin.component';
+import { CustomerComponent } from './customer/customer.component';
+import { AdminDetailsComponent } from './admin-details/admin-details.component';
+import { UpdateAdminComponent } from './update-admin/update-admin.component';
+import { HomeLoginComponent } from './home-login/home-login.component';
+import { AddCustomerComponent } from './add-customer/add-customer.component';
+import { CustomerDetailsComponent } from './customer-details/customer-details.component';
+import { UpdateCustomerComponent } from './update-customer/update-customer.component';
+
 import { MytestComponent } from './mytest/mytest.component';
 import { MydiagnosticcentreComponent } from './mydiagnosticcentre/mydiagnosticcentre.component';
 import { CreateTestComponent } from './create-test/create-test.component';
@@ -15,11 +24,23 @@ import { CreateAppointmentComponent } from './create-appointment/create-appointm
 import { UpdateTestComponent } from './update-test/update-test.component';
 import { UpdateAppointmentComponent } from './update-appointment/update-appointment.component';
 import { UpdateDiagnosticcentreComponent } from './update-diagnosticcentre/update-diagnosticcentre.component';
+import { LogoutComponent } from './logout/logout.component';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    MytestComponent,
+    AdminComponent,
+    AddAdminComponent,
+    CustomerComponent,
+    AdminDetailsComponent,
+    UpdateAdminComponent,
+    HomeLoginComponent,
+    AddCustomerComponent,
+    CustomerDetailsComponent,
+    UpdateCustomerComponent,
+	MytestComponent,
     MydiagnosticcentreComponent,
     CreateTestComponent,
     CreateDiagnosticcentreComponent,
@@ -27,14 +48,15 @@ import { UpdateDiagnosticcentreComponent } from './update-diagnosticcentre/updat
     CreateAppointmentComponent,
     UpdateTestComponent,
     UpdateAppointmentComponent,
-    UpdateDiagnosticcentreComponent
-  ],
+    UpdateDiagnosticcentreComponent,
+    LogoutComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule,
-    FormsModule
+    FormsModule, 
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

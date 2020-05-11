@@ -33,4 +33,20 @@ export class MyappointmentComponent implements OnInit {
     this.router.navigate(['updateAppointment',id]);
 
   }
+
+  goHome(){
+    this.router.navigate(['home']);
+  }
+  goCustomer(){
+    this.router.navigate(['customer']);
+  }
+  goAddCustomer(){
+    this.router.navigate(['addCustomer']);
+  }
+  goAddAppointment(){
+    this.router.navigate(['addappointment']);
+  }
+  gotoList() {
+    this.router.navigate(['/customer']);
+  }
 }
