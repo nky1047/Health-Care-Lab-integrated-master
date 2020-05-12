@@ -2,13 +2,16 @@ package org.com.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
 import org.com.dao.DiagnosticCentreRepositories;
+import org.com.dao.TestRepositories;
 import org.com.exception.RecordNotFoundException;
 import org.com.model.DiagnosticCentre;
 import org.com.model.Test;
+import org.com.service.DiagnosticCentreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,103 +33,69 @@ public class DiagnosticCentreController {
 	@Autowired
 	DiagnosticCentreRepositories dao;
 	
+	@Autowired
+	DiagnosticCentreService diagnosticCentreService;
+	
+	@Autowired
+	TestRepositories testDao;
+	
 	@RequestMapping("/allDiagnosticCentres")
 	public List<DiagnosticCentre> getAllDiagnosticCentres(){
-		return dao.findAll();
+		return diagnosticCentreService.getAllDiagnosticCentres();
 	}
 	
 	@RequestMapping("/searchDiagnosticCentre/{id}")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<?> findDiagnosticCentre1(@PathVariable("id") int diagnosticCentreid) {
-		Optional<DiagnosticCentre> findById=dao.findById(diagnosticCentreid);
-		try {
-			if(findById.isPresent()) {
-				DiagnosticCentre diagnosticCentre=findById.get();
-				return new ResponseEntity<DiagnosticCentre>(diagnosticCentre,HttpStatus.OK);
-			}
-			else
-				throw new RecordNotFoundException("Diagnostic Centre not found");
-		}
-		catch(RecordNotFoundException e) {
-			return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-		}
+	public ResponseEntity<?> findDiagnosticCentre(@PathVariable("id") int diagnosticCentreid) {
+		return diagnosticCentreService.searchDiagnosticCentre(diagnosticCentreid);
 	}
-	
-//	@RequestMapping("/searchDiagnosticCentre/{id}")
-//	public DiagnosticCentre findDiagnosticCentre(@PathVariable("id") int diagnosticCentreid) {
-//		Optional<DiagnosticCentre> findById=dao.findById(diagnosticCentreid);
-//		if(findById.isPresent())
-//			return findById.get();
-//		
-//		return null;
-//	}
-	
-//	@PostMapping("/addAppointment")
-//	public String saveAppointment(@RequestBody Appointment appointment1) {
-//		Optional<Appointment> findById=dao.findById(appointment1.getAppointmentId());
-//		if(!findById.isPresent()) {
-//			dao.save(appointment1);
-//			return "appointment added";
-//		}
-//		
-//		return "appointment already exists";
-//	}
 	
 	@PostMapping("/addDiagnosticCentre")
 	@ExceptionHandler(RecordNotFoundException.class)
-	public ResponseEntity<DiagnosticCentre> saveDiagnosticCentre(@RequestBody DiagnosticCentre diagnosticCentre2) {
-		Optional<DiagnosticCentre> findById=dao.findById(diagnosticCentre2.getDiagnosticCentreId());
-		try{
-			if(!findById.isPresent()) {
-				dao.save(diagnosticCentre2);
-				return new ResponseEntity<DiagnosticCentre>(diagnosticCentre2, HttpStatus.OK);
-			}
-			else
-				throw new RecordNotFoundException("Diagnostic Centre already present...");
-		}
-		catch(RecordNotFoundException e){
-			return new ResponseEntity<DiagnosticCentre>(diagnosticCentre2, HttpStatus.NOT_FOUND);
-		}
+	public DiagnosticCentre saveDiagnosticCentre(@RequestBody DiagnosticCentre diagnosticCentre) {
+		return diagnosticCentreService.saveDiagnosticCentre(diagnosticCentre);
 	}
 	
 	@DeleteMapping("/deleteDiagnosticCentre/{id}")
 	public String removeDiagnosticCentre(@PathVariable("id") int diagnosticCentreid) {
-		Optional<DiagnosticCentre> findById=dao.findById(diagnosticCentreid);
-		if(findById.isPresent()) {
-			dao.deleteById(diagnosticCentreid);
-			return "Diagnostic Centre removed";
-		}
-		
-		return "Diagnostic Centre not present";
+		return diagnosticCentreService.removeDiagnosticCentre(diagnosticCentreid);
 	}
 	
 	@PutMapping("/updateDiagnosticCentre")
     public ResponseEntity<DiagnosticCentre> updateDiagnosticCentre(@Valid @RequestBody DiagnosticCentre diagnosticCentre) {
-
-        Optional<DiagnosticCentre> findById = dao.findById(diagnosticCentre.getDiagnosticCentreId());
-        try {
-            if (findById.isPresent()) {
-                dao.save(diagnosticCentre);
-                return new ResponseEntity<DiagnosticCentre>(diagnosticCentre, HttpStatus.OK);
-            	} 
-            else {
-                throw new RecordNotFoundException("Diagnostic Centre not present");
-            }
-        }
-        catch (RecordNotFoundException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+		return diagnosticCentreService.updateDiagnosticCentre(diagnosticCentre);
     }
-	
-//	@PutMapping("/updateDiagnosticCentre")
-//	public String updateDiagnosticCentre(@RequestBody DiagnosticCentre diagnosticCentre) {
-//		Optional<DiagnosticCentre> findById=dao.findById(diagnosticCentre.getDiagnosticCentreId());
-//		if(findById.isPresent()) {
-//			dao.save(diagnosticCentre);
-//			return "Diagnostic Centre updated";
-//		}
-//		
-//		return "Diagnostic Centre not present";
-//	}
 
 }
+
+
+//@RequestMapping("/searchDiagnosticCentre/{id}")
+//public DiagnosticCentre findDiagnosticCentre(@PathVariable("id") int diagnosticCentreid) {
+//	Optional<DiagnosticCentre> findById=dao.findById(diagnosticCentreid);
+//	if(findById.isPresent())
+//		return findById.get();
+//	
+//	return null;
+//}
+
+//@PostMapping("/addAppointment")
+//public String saveAppointment(@RequestBody Appointment appointment1) {
+//	Optional<Appointment> findById=dao.findById(appointment1.getAppointmentId());
+//	if(!findById.isPresent()) {
+//		dao.save(appointment1);
+//		return "appointment added";
+//	}
+//	
+//	return "appointment already exists";
+//}
+
+//@PutMapping("/updateDiagnosticCentre")
+//public String updateDiagnosticCentre(@RequestBody DiagnosticCentre diagnosticCentre) {
+//	Optional<DiagnosticCentre> findById=dao.findById(diagnosticCentre.getDiagnosticCentreId());
+//	if(findById.isPresent()) {
+//		dao.save(diagnosticCentre);
+//		return "Diagnostic Centre updated";
+//	}
+//	
+//	return "Diagnostic Centre not present";
+//}

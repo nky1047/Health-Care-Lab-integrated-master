@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Test {
 	
@@ -19,6 +21,7 @@ public class Test {
 	
 	@ManyToOne
 	@JoinColumn(name="diagnosticCentreId")
+	@JsonBackReference
 	private DiagnosticCentre diagnosticCentre;
 	
 	public int getTestId() {
@@ -46,6 +49,12 @@ public class Test {
 		this.testCost = testCost;
 	}
 	
+	public DiagnosticCentre getDiagnosticCentre() {
+		return diagnosticCentre;
+	}
+	public void setDiagnosticCentre(DiagnosticCentre diagnosticCentre) {
+		this.diagnosticCentre = diagnosticCentre;
+	}
 	@Override
 	public String toString() {
 		return "Test [testId=" + testId + ", testName=" + testName + ", testDetails=" + testDetails + ", testCost="

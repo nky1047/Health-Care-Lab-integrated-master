@@ -2,6 +2,7 @@ package org.com;
 
 
 import org.com.model.Admin;
+import org.com.model.Appointment;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ class HealthCareSystemApplicationTests	 {
 	
 	@Test
 	public void searchAdminRecord() {
-		Admin admin = restTemplate.getForObject("http://localhost:9090/admin/searchAdmin/1003", Admin.class);
+		Admin admin = restTemplate.getForObject("http://localhost:9090/admin/getAdmin/5", Admin.class);
 		Assertions.assertNotNull(admin);
 		logger.info("Search Admin Works!!");
 	}
@@ -39,9 +40,15 @@ class HealthCareSystemApplicationTests	 {
 		admin.setEmail("abhijeet@gmail.com");
 		admin.setGender("Male");
 		admin.setUserRole("admin");
-		ResponseEntity<Admin> postForEntity = restTemplate.postForEntity("http://localhost:9090/admin/addAdmin/",admin, Admin.class);
+		ResponseEntity<Admin> postForEntity = restTemplate.postForEntity("http://localhost:9090/admin/getAdmin/",admin, Admin.class);
 		Assertions.assertNotNull(postForEntity);
 		logger.info("Add Admin Works!!");
 	}
-
+	
+	@Test
+	public void searchAppointment() {
+		Appointment appointment = restTemplate.getForObject("http://localhost:9090/appoint/searchAppointment/1", Appointment.class);
+		Assertions.assertNotNull(appointment);
+		logger.info("Search Appointment Works!!");
+	}
 }

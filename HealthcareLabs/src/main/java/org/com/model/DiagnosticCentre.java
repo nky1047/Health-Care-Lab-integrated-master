@@ -1,12 +1,17 @@
 package org.com.model;
 
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class DiagnosticCentre {
@@ -17,13 +22,20 @@ public class DiagnosticCentre {
 	private String centreName;
 	private String centreAddress;
 	
-	@OneToMany(mappedBy = "diagnosticCentre")
-	private List<Test> listOfTests;
+	@JsonManagedReference
+	@OneToMany(targetEntity=Test.class, mappedBy="diagnosticCentre")
+	private Set<Test> setOfTests;
 	
 //	@OneToMany(mappedBy = "diagnosticCentre")
 //	private List<Appointment> appointmentList;
 	
 	
+	public Set<Test> getSetOfTests() {
+		return setOfTests;
+	}
+	public void setSetOfTests(Set<Test> setOfTests) {
+		this.setOfTests = setOfTests;
+	}
 	public int getDiagnosticCentreId() {
 		return diagnosticCentreId;
 	}
@@ -42,12 +54,12 @@ public class DiagnosticCentre {
 	public void setCentreAddress(String centreAddress) {
 		this.centreAddress = centreAddress;
 	}
-	public List<Test> getListOfTests() {
-		return listOfTests;
-	}
-	public void setListOfTests(List<Test> listOfTests) {
-		this.listOfTests = listOfTests;
-	}
+//	public List<Test> getListOfTests() {
+//		return listOfTests;
+//	}
+//	public void setListOfTests(List<Test> listOfTests) {
+//		this.listOfTests = listOfTests;
+//	}
 	
 //	public List<Appointment> getAppointmentList() {
 //		return appointmentList;
